@@ -5,16 +5,19 @@ find_package(catkin REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system thread)
 find_package(octomap REQUIRED)
 find_package(assimp REQUIRED)
+include_directories(${ASSIMP_INCLUDE_DIRS} /usr/include)
 
 include(ExternalProject)
 
+#message("assimp found:" ${assimp_FOUND} " version number:" ${assimp_VERSION})
+
 ExternalProject_Add(hpp-fcl_src
-  GIT_REPOSITORY "https://github.com/humanoid-path-planner/hpp-fcl.git"
-  GIT_TAG "v1.0.1"
+  GIT_REPOSITORY "https://github.com/stevenjj/hpp-fcl.git"
+  GIT_TAG "v1.0.1-unified-headers"
 
   UPDATE_COMMAND ""
   TEST_COMMAND ""
-  CMAKE_ARGS -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=${PROJECT_BINARY_DIR}/install -DCMAKE_INSTALL_LIBDIR=lib
+  CMAKE_ARGS -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=${PROJECT_BINARY_DIR}/install -DCMAKE_INSTALL_LIBDIR=lib -DASSIMP_FOUND=${assimp_FOUND} -DASSIMP_VERSION=${ASSIMP_VERSION} -DHPP_FCL_USE_ASSIMP_UNIFIED_HEADER_NAMES=TRUE
 )
 ExternalProject_Add_Step(hpp-fcl_src CopyToDevel
   COMMENT "Copying to devel"
