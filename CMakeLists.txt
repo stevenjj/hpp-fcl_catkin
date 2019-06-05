@@ -19,7 +19,7 @@ ExternalProject_Add(hpp-fcl_src
 ExternalProject_Add_Step(hpp-fcl_src CopyToDevel
   COMMENT "Copying to devel"
   COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_BINARY_DIR}/install/lib/libhpp-fcl.so ${CATKIN_DEVEL_PREFIX}/lib/
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_BINARY_DIR}/install/include/hpp/ ${CATKIN_DEVEL_PREFIX}/include/hpp/
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_BINARY_DIR}/install/include ${CATKIN_DEVEL_PREFIX}/include/${PROJECT_NAME}
   DEPENDEES install
 )
 
@@ -35,7 +35,7 @@ else()
   message(STATUS "Compiling for devel workspace")
   file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include/${PROJECT_NAME}/hpp/fcl)
   catkin_package(
-    INCLUDE_DIRS ${CATKIN_DEVEL_PREFIX}/include/${PROJECT_NAME}
+    INCLUDE_DIRS ${CATKIN_DEVEL_PREFIX}/include
     LIBRARIES hpp-fcl ${ASSIMP_LIBRARIES}
     # DEPENDS Boost OCTOMAP # ASSIMP
     CFG_EXTRAS hpp-fcl.cmake
@@ -43,7 +43,7 @@ else()
 endif()
 
 install(
-  DIRECTORY ${CATKIN_DEVEL_PREFIX}/include/
+  DIRECTORY ${CATKIN_DEVEL_PREFIX}/include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 )
 install(
