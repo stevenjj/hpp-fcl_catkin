@@ -4,7 +4,7 @@ project(hpp-fcl)
 find_package(catkin REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system thread)
 find_package(octomap REQUIRED)
-find_package(assimp REQUIRED)
+find_package(assimp 3.2 REQUIRED)
 include_directories(${ASSIMP_INCLUDE_DIRS} /usr/include)
 
 include(ExternalProject)
